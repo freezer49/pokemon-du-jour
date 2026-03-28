@@ -6,6 +6,10 @@
   padding: 0;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   background-image: url(background.png);
   background-size: cover;
@@ -103,7 +107,7 @@ h1 {
 #layout {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 60px 40px;
+  padding: 60px 60px;
   flex: 1;
   width: 100%;
 }
@@ -111,10 +115,9 @@ h1 {
 /* ── ROULETTE SECTION ── */
 #section-roulette {
   display: flex;
-  gap: 40px;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+  gap: 24px;
 }
 
 #section-historique {
@@ -122,27 +125,47 @@ h1 {
   min-height: 60vh;
 }
 
-/* ── SLOT SIDE ── */
-#slot-side {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
+/* ── FLIP SCENE ── */
+#flip-scene {
+  perspective: 1200px;
 }
 
+#flip-wrapper {
+  width: 500px;
+  height: 700px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.9s ease;
+  transform: rotateY(0deg);
+}
+
+#slot-face,
+#card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+#card-face {
+  transform: rotateY(180deg);
+}
+
+/* ── SLOT FRAME (face avant de la roulette) ── */
 #slot-frame {
-  width: min(480px, 42vw);
-  height: min(480px, 42vw);
-  background-color: #c4d1ed;
-  border-top: 3px solid #e8eef8;
-  border-left: 3px solid #e8eef8;
-  border-right: 3px solid #6a7a9f;
-  border-bottom: 3px solid #6a7a9f;
+  width: 100%;
+  height: 100%;
+  border-top: 3px solid #e8d48a;
+  border-left: 3px solid #e8d48a;
+  border-right: 3px solid #8a6a10;
+  border-bottom: 3px solid #8a6a10;
   outline: 3px solid #c9a84c;
+  background: #fefefe;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 #slot-frame img {
@@ -151,11 +174,46 @@ h1 {
   object-fit: contain;
 }
 
-#btn {
+/* ── QUESTION MARK INITIAL ── */
+.slot-question {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.slot-question-header {
+  font-size: 6px;
+  color: #c9a84c;
+  letter-spacing: 2px;
+  border-bottom: 1px solid #c9a84c;
+  width: calc(100% - 56px);
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.slot-question-mark {
+  font-size: 160px;
+  color: #c9a84c;
+  line-height: 1;
+}
+
+.slot-question-stars {
+  font-size: 9px;
+  color: #c9a84c;
+  letter-spacing: 8px;
+}
+
+/* ── BUTTONS ── */
+#btn,
+#btn-relancer {
   background: #c4d1ed;
   font-family: "Press Start 2P", system-ui;
   font-size: 9px;
-  width: min(480px, 42vw);
+  width: 500px;
   padding: 18px 12px;
   cursor: pointer;
   color: #080e72;
@@ -166,7 +224,8 @@ h1 {
   letter-spacing: 2px;
 }
 
-#btn:active {
+#btn:active,
+#btn-relancer:active {
   border-top: 3px solid #6a7a9f;
   border-left: 3px solid #6a7a9f;
   border-right: 3px solid #e8eef8;
@@ -179,67 +238,15 @@ h1 {
   cursor: not-allowed;
 }
 
-/* ── CARD SCENE ── */
-#card-scene {
-  perspective: 1000px;
+#btn-relancer {
+  display: none;
 }
 
-#card-wrapper {
-  width: min(460px, 40vw);
-  height: 700px;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.8s ease;
-  transform: rotateY(0deg);
-}
-
-#card-back,
+/* ── CARD (face arrière du flip) ── */
 #card {
-  backface-visibility: hidden;
-  width: min(460px, 40vw);
-}
-
-/* ── CARD BACK ── */
-#card-back {
-  position: relative;
-  border-top: 3px solid #e8d48a;
-  border-left: 3px solid #e8d48a;
-  border-right: 3px solid #8a6a10;
-  border-bottom: 3px solid #8a6a10;
-  outline: 3px solid #c9a84c;
-  background: #fefefe;
-  padding: 32px 28px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  min-height: 700px;
-}
-
-#card-back-header {
-  font-size: 6px;
-  color: #c9a84c;
-  letter-spacing: 2px;
-  border-bottom: 1px solid #c9a84c;
   width: 100%;
-  padding-bottom: 10px;
-  text-align: center;
-}
-
-#card-question {
-  font-size: 120px;
-  color: #c9a84c;
-  font-family: "Press Start 2P", system-ui;
-  line-height: 1;
-}
-
-/* ── CARD FRONT ── */
-#card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: rotateY(180deg);
+  height: 100%;
+  position: relative;
   border-top: 3px solid #e8d48a;
   border-left: 3px solid #e8d48a;
   border-right: 3px solid #8a6a10;
@@ -251,7 +258,6 @@ h1 {
   flex-direction: column;
   align-items: center;
   gap: 14px;
-  min-height: 700px;
 }
 
 .card-corner {
@@ -287,8 +293,8 @@ h1 {
 }
 
 #pokemon-image {
-  width: min(280px, 30vw);
-  height: min(280px, 30vw);
+  width: 260px;
+  height: 260px;
   object-fit: contain;
 }
 
@@ -429,41 +435,30 @@ h1 {
   color: #fefefe;
   text-align: center;
   padding: 20px;
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 2px;
   margin-top: auto;
 }
 
 /* ── RESPONSIVE TABLETTE ── */
-@media (max-width: 1100px) {
-  #slot-frame {
-    width: min(340px, 90vw);
-    height: min(340px, 90vw);
-  }
-  #btn {
-    width: min(340px, 90vw);
-  }
-  #card-wrapper {
-    width: min(340px, 90vw);
+@media (max-width: 1200px) {
+  #flip-wrapper {
+    width: 420px;
     height: 600px;
   }
-  #card-back,
-  #card {
-    width: min(340px, 90vw);
-    min-height: 600px;
+  #btn,
+  #btn-relancer {
+    width: 420px;
   }
   #pokemon-image {
-    width: 200px;
-    height: 200px;
+    width: 210px;
+    height: 210px;
   }
-  #card-question {
-    font-size: 90px;
-  }
-  #section-roulette {
-    gap: 32px;
+  .slot-question-mark {
+    font-size: 130px;
   }
   #layout {
-    padding: 40px 24px;
+    padding: 40px 30px;
   }
   #history-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -504,46 +499,34 @@ h1 {
     padding: 28px 16px;
   }
 
-  #section-roulette {
-    flex-direction: column;
-    align-items: center;
-    gap: 28px;
+  #flip-wrapper {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    aspect-ratio: 5 / 7;
   }
 
-  #slot-frame {
-    width: calc(100vw - 48px);
-    height: calc(100vw - 48px);
-    max-width: 340px;
-    max-height: 340px;
-  }
-  #btn {
-    width: calc(100vw - 48px);
+  #btn,
+  #btn-relancer {
+    width: 100%;
     max-width: 340px;
     font-size: 6px;
     padding: 14px 8px;
-  }
-  #card-wrapper {
-    width: calc(100vw - 48px);
-    max-width: 340px;
-    height: 520px;
-  }
-  #card-back,
-  #card {
-    width: calc(100vw - 48px);
-    max-width: 340px;
-    min-height: 520px;
   }
 
   #pokemon-image {
     width: 160px;
     height: 160px;
   }
-  #card-question {
-    font-size: 70px;
+
+  .slot-question-mark {
+    font-size: 90px;
   }
+
   #pokemon-name {
     font-size: 9px;
   }
+
   #pokemon-message {
     font-size: 20px;
   }
@@ -552,14 +535,18 @@ h1 {
     grid-template-columns: 1fr;
     gap: 20px;
   }
+
   .history-card img {
     width: 120px;
     height: 120px;
   }
 
   #footer {
-    font-size: 6px;
+    font-size: 9px;
     padding: 16px;
     letter-spacing: 1px;
+  }
+  a:link {
+    color: #fefefe;
   }
 }
