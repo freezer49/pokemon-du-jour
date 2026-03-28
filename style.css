@@ -6,10 +6,6 @@
   padding: 0;
 }
 
-html {
-  overflow-x: hidden;
-}
-
 body {
   background-image: url(background.png);
   background-size: cover;
@@ -19,6 +15,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* ── HEADER ── */
@@ -467,6 +464,10 @@ h1 {
 
 /* ── RESPONSIVE MOBILE ── */
 @media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+
   h1 {
     font-size: 13px;
     letter-spacing: 2px;
@@ -500,23 +501,25 @@ h1 {
   }
 
   #flip-wrapper {
-    width: 100%;
-    max-width: 340px;
-    height: auto;
-    aspect-ratio: 5 / 7;
+    width: min(calc(100vw - 48px), 400px);
+    height: min(calc((100vw - 48px) * 1.4), 560px);
   }
 
   #btn,
   #btn-relancer {
-    width: 100%;
-    max-width: 340px;
+    width: min(calc(100vw - 48px), 400px);
     font-size: 6px;
     padding: 14px 8px;
   }
 
+  #card {
+    padding: 20px 16px;
+    gap: 8px;
+  }
+
   #pokemon-image {
-    width: 160px;
-    height: 160px;
+    width: 120px;
+    height: 120px;
   }
 
   .slot-question-mark {
@@ -528,7 +531,7 @@ h1 {
   }
 
   #pokemon-message {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   #history-grid {
